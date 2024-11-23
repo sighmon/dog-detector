@@ -1,5 +1,5 @@
 # Define variables
-PYTHON = python3
+PYTHON = python3.12
 VENV_DIR = venv
 ACTIVATE = . $(VENV_DIR)/bin/activate
 

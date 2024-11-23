@@ -46,7 +46,7 @@ def detection_thread():
             frame_counter += 1
 
             # Skip frames for detection
-            if frame_counter % 10 != 0:
+            if frame_counter % 30 != 0:
                 continue
 
             results = model(frame)[0]
@@ -56,7 +56,7 @@ def detection_thread():
             if 16 in detections.class_id:
                 if DEBUG and not recording_state:
                     print("Dog detected!")
-                record_until = datetime.now() + timedelta(seconds=3)  # Extend recording time
+                record_until = datetime.now() + timedelta(seconds=10)  # Extend recording time
                 recording_flag.set()
                 recording_state = True  # Update the state to indicate recording
 
@@ -87,8 +87,7 @@ def recording_thread():
                 timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
                 filepath = os.path.join(video_dir, f'dog_detected_{timestamp}.mp4')  # Use absolute path
                 out = cv2.VideoWriter(filepath, fourcc, fps, (frame.shape[1], frame.shape[0]))
-                if DEBUG:
-                    print(f"Recording started: {filepath}")
+                print(f"Recording started: {filepath}")
             out.write(frame)
         else:
             # Stop recording if the flag is cleared
